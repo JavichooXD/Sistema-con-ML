@@ -54,23 +54,29 @@ Siga los siguientes pasos para levantar los servicios locales en tres terminales
    # Crear entorno virtual
    python -m venv venv
    
-   # Activar en Windows PowerShell
+   # Activar en Windows PowerShell (¡OBLIGATORIO para reconocer comandos como uvicorn!)
    .\venv\Scripts\Activate.ps1
    
    # Instalar dependencias
    pip install -r requirements.txt
    ```
+   *Nota: Si PowerShell te da error al activar el script por restricciones de políticas de ejecución de Windows, puedes omitir la activación y correr todo directamente indicando la ruta del entorno virtual como se detalla abajo.*
+
 3. Genere el dataset municipal y entrene los clasificadores:
    ```bash
    # Generar dataset sintético (500 registros)
-   python generate_mock_data.py
+   .\venv\Scripts\python generate_mock_data.py
    
    # Entrenar y exportar modelos .pkl
-   python train_models.py
+   .\venv\Scripts\python train_models.py
    ```
 4. Inicie la API de FastAPI:
    ```bash
+   # Opción A (Si pudiste activar el venv en el paso 2):
    uvicorn main:app --reload --port 8000
+   
+   # Opción B (Comando directo - recomendado si no activaste el venv o sale error):
+   .\venv\Scripts\python -m uvicorn main:app --reload --port 8000
    ```
    *Servidor de IA escuchando en `http://127.0.0.1:8000`.*
 
